@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -39,7 +39,7 @@ enum CaseColor {
 }
 
 model Configuration {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  id              String        @id @default(uuid())
   width           Int
   height          Int
   imageUrl        String
@@ -52,7 +52,7 @@ model Configuration {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(uuid())
   name          String
   email         String    @unique
   emailVerified DateTime?
@@ -66,8 +66,8 @@ model User {
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String  @id @default(uuid())
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -85,26 +85,26 @@ model Account {
 }
 
 model Order {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
-  configurationId String        @db.ObjectId
+  id              String        @id @default(uuid())
+  configurationId String       
   configuration   Configuration @relation(fields: [configurationId], references: [id])
   user            User          @relation(fields: [userId], references: [id])
-  userId          String        @db.ObjectId
+  userId          String       
   amount          Float
   isPaid          Boolean       @default(false)
   status          OrderStatus   @default(awaiting_shipment)
 
   shippingAddress   ShippingAddress? @relation(fields: [shippingAddressId], references: [id])
-  shippingAddressId String?          @db.ObjectId
+  shippingAddressId String?
   billingAddress    BillingAddress?  @relation(fields: [billingAddressId], references: [id])
-  billingAddressId  String?          @db.ObjectId
+  billingAddressId  String?        
 
   createdAt DateTime @default(now())
   updated   DateTime @updatedAt
 }
 
 model ShippingAddress {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(uuid())
   name        String
   street      String
   city        String
@@ -116,7 +116,7 @@ model ShippingAddress {
 }
 
 model BillingAddress {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(uuid())
   name        String
   street      String
   city        String
