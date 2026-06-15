@@ -1,8 +1,5 @@
 "use client";
-import React, {
-  Fragment,
-  useTransition,
-} from "react";
+import React, { Fragment, useTransition } from "react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -14,7 +11,7 @@ const Social = () => {
   const onClick = (provider: "github" | "google") => {
     try {
       startTransition(async () => {
-        await signIn(provider);
+        await signIn(provider, { redirectTo: "/" });
       });
     } catch (error: any) {
       console.log(error);
