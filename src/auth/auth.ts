@@ -12,6 +12,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login",
   },
+  // @ts-expect-error
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   providers: [
