@@ -3,8 +3,8 @@
 import { db } from "@/lib/db";
 import getCurrentUser from "../getActions/getCurrentUser";
 import { BASE_PRICE, PRODUCT_PRICES } from "@/config/products";
-import { Order } from "@prisma/client";
 import { stripe } from "@/lib/stripe";
+import { Order } from "@/generated/prisma/client";
 
 export const createCheckoutSession = async ({
   configId,

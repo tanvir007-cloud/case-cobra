@@ -6,7 +6,7 @@ import {
   CaseFinish,
   CaseMaterial,
   PhoneModel,
-} from "@prisma/client";
+} from "@/generated/prisma/client";
 
 export type saveConfigArgs = {
   color: CaseColor;
